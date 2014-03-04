@@ -393,7 +393,12 @@ function! s:MakeDirectGroupMappings()
 			let l:plugMappingName = printf('<Plug>MarkSearchGroup%d%s', l:cnt, l:direction)
 			execute printf('nnoremap <silent> %s :<C-u>call mark#SearchGroupMark(%d, v:count1, %d, 1)<CR>', l:plugMappingName, l:cnt, l:isBackward)
 			if ! hasmapto(l:plugMappingName, 'n')
-				execute printf('nmap <%sk%d> %s', l:keyModifier, l:cnt, l:plugMappingName)
+				"execute printf('nmap <%sk%d> %s', l:keyModifier, l:cnt, l:plugMappingName)
+				if empty(l:keyModifier)
+					execute printf('nmap ,%d %s', l:cnt, l:plugMappingName)
+				else
+					execute printf('nmap ;%d %s', l:cnt, l:plugMappingName)
+				endif
 			endif
 		endfor
 	endfor
